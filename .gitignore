@@ -1,0 +1,5 @@
+.idea/*
+output/*
+./env
+*bible.json
+*/__pycache__/*
