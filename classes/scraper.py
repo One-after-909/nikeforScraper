@@ -6,7 +6,8 @@ from pymongo import MongoClient
 class Scraper:
     """Parent class for specific languages. Implements datastructures and saving to file/DB."""
 
-    def __init__(self, url: str = "http://bible.liturgie.cz/services/", db_connection: str = "", db_name: str = ""):
+    def __init__(self, url: str = "", db_connection: str = "", db_name: str = ""):
+        self.lang_code = ""
         self.DB = None
         self.url = url
         if db_connection != "":
@@ -22,7 +23,8 @@ class Scraper:
             json.dump(data, f)
 
     def save_to_mongo(self):
-        self.DB.insert_many(self.data)
+        collection = self.DB["bibles"]
+        collection.insert_many(self.data)
 
     def load_data(self, data):
         self.data = data
@@ -42,6 +44,8 @@ class Scraper:
 class ScraperCZ(Scraper):
     def __init__(self, *args, **kwargs):
         super(ScraperCZ, self).__init__(*args, **kwargs)
+        self.url = "http://bible.liturgie.cz/services/" if self.url == "" else self.url
+        self.lang_code = "cz"
 
     def get_chapter_text(self, book_id: int, chapter: int, verbose: bool = False) -> list:
         url = self.url + "Verses.ashx?BookId=" + str(book_id) + "&Chapter=" + str(chapter)
@@ -76,6 +80,7 @@ class ScraperCZ(Scraper):
     def get_book(self, book: dict, verbose: bool = False) -> dict:
         if verbose:
             print(book["name"])
+        book["lang"] = "cz"
         book["chapters"] = self.get_chapters(book["id"], verbose)
         return book
 
