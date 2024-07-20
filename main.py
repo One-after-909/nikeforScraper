@@ -1,11 +1,11 @@
-from classes.scraper import ScraperCZ
+from classes.scraper import ScraperCS
 
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-scraper = ScraperCZ(db_connection=os.getenv("MONGO_DB_CONNECTION"), db_name=os.getenv("MONGO_DB_NAME"))
+scraper = ScraperCS(db_connection=os.getenv("MONGO_DB_CONNECTION"), db_name=os.getenv("MONGO_DB_NAME"))
 
 scraper.load_from_url(True)
 scraper.save_to_file("./output/cz_bible.json")

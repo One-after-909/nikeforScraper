@@ -41,11 +41,11 @@ class Scraper:
             self.DB.close()
 
 
-class ScraperCZ(Scraper):
+class ScraperCS(Scraper):
     def __init__(self, *args, **kwargs):
-        super(ScraperCZ, self).__init__(*args, **kwargs)
+        super(ScraperCS, self).__init__(*args, **kwargs)
         self.url = "http://bible.liturgie.cz/services/" if self.url == "" else self.url
-        self.lang_code = "cz"
+        self.lang_code = "cs"
 
     def get_chapter_text(self, book_id: int, chapter: int, verbose: bool = False) -> list:
         url = self.url + "Verses.ashx?BookId=" + str(book_id) + "&Chapter=" + str(chapter)
@@ -80,7 +80,7 @@ class ScraperCZ(Scraper):
     def get_book(self, book: dict, verbose: bool = False) -> dict:
         if verbose:
             print(book["name"])
-        book["lang"] = "cz"
+        book["lang"] = "cs"
         book["chapters"] = self.get_chapters(book["id"], verbose)
         return book
 
