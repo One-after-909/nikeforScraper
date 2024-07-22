@@ -1,4 +1,4 @@
-# NikeforViewer
+# NikeforScraper
 
 This is a set of web scapers and other tools for gethering text of Holy Bible in differnt languages.
 
